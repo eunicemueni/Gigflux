@@ -1,0 +1,93 @@
+// server.js
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+
+// CONFIG
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/gigflux';
+const PORT = process.env.PORT || 5000;
+
+// CONNECT
+mongoose.connect(MONGO_URI, { useNewUrlParser:true, useUnifiedTopology:true })
+  .then(()=>console.log('MongoDB connected'))
+  .catch(err=>console.error('MongoDB error', err));
+
+// SCHEMA
+const jobSchema = new mongoose.Schema({
+  title: String,
+  desc: String,
+  type: String,
+  amount: Number,
+  clientEmail: String,
+  status: { type:String, enum:['pending_payment','paid','cancelled','completed'], default:'pending_payment' },
+  createdAt: { type: Date, default: Date.now }
+});
+const Job = mongoose.model('Job', jobSchema);
+
+// ROUTES
+
+app.get('/api/health', (req,res)=> res.json({ ok:true }));
+
+// Create job -> pending_payment
+app.post('/api/jobs', async (req,res)=>{
+  try{
+    const { title, desc, type, amount, clientEmail } = req.body;
+    const job = new Job({ title, desc, type, amount, clientEmail, status:'pending_payment' });
+    await job.save();
+    return res.json({ success:true, job });
+  }catch(err){ console.error(err); return res.status(500).json({ success:false, message:err.message }); }
+});
+
+// Get pending jobs (admin)
+app.get('/api/jobs/pending', async (req,res)=>{
+  try{
+    const list = await Job.find({ status:'pending_payment' }).sort({ createdAt:-1 });
+    res.json(list);
+  }catch(err){ res.status(500).json({ success:false, message:err.message }); }
+});
+
+// Confirm payment (admin or webhook) -> set paid
+app.post('/api/jobs/:id/confirm-payment', async (req,res)=>{
+  try{
+    const job = await Job.findByIdAndUpdate(req.params.id, { status:'paid' }, { new:true });
+    if(!job) return res.status(404).json({ success:false, message:'Job not found' });
+    // TODO: send email/notification to worker pool if desired
+    return res.json({ success:true, job });
+  }catch(err){ console.error(err); return res.status(500).json({ success:false, message:err.message }); }
+});
+
+// Cancel job
+app.post('/api/jobs/:id/cancel', async (req,res)=>{
+  try{
+    const job = await Job.findByIdAndUpdate(req.params.id, { status:'cancelled' }, { new:true });
+    if(!job) return res.status(404).json({ success:false, message:'Job not found' });
+    return res.json({ success:true, job });
+  }catch(err){ console.error(err); return res.status(500).json({ success:false, message:err.message }); }
+});
+
+// Get paid jobs (visible to workers)
+app.get('/api/jobs/paid', async (req,res)=>{
+  try{
+    const list = await Job.find({ status:'paid' }).sort({ createdAt:-1 });
+    res.json(list);
+  }catch(err){ res.status(500).json({ success:false, message:err.message }); }
+});
+
+// Webhook endpoint (PayPal/Paystack) - very basic; you must validate signature in production
+app.post('/api/webhook/paypal', async (req,res)=>{
+  // Expect body: { jobId: "...", providerData: {...} }
+  const { jobId } = req.body;
+  if(!jobId) return res.status(400).json({ success:false, message:'jobId required' });
+  try{
+    const job = await Job.findByIdAndUpdate(jobId, { status:'paid' }, { new:true });
+    return res.json({ success:true, job });
+  }catch(err){ console.error(err); return res.status(500).json({ success:false, message:err.message }); }
+});
+
+app.listen(PORT, ()=>console.log(`GigFlux server running on port ${PORT}`));
