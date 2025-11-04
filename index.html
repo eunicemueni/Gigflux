@@ -3,73 +3,295 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GigFlux – Work. Earn. Grow.</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<title>GigFlux Marketplace — Jobs & Tasks</title>
+
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content="GigFlux Marketplace — Jobs & Tasks">
+<meta property="og:description" content="Find jobs, tasks, and micro-gigs instantly. Pay & post live jobs.">
+<meta property="og:image" content="https://skillmatch-live.onrender.com/495fc095-ef40-4e2e-9764-4dc12746feec.png">
+<meta property="og:url" content="https://skillmatch-live.onrender.com/">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GigFlux Marketplace — Jobs & Tasks">
+<meta name="twitter:description" content="Find jobs, tasks, and micro-gigs instantly. Pay & post live jobs.">
+<meta name="twitter:image" content="https://skillmatch-live.onrender.com/495fc095-ef40-4e2e-9764-4dc12746feec.png">
+
 <style>
-  body { font-family: Arial, sans-serif; background:#0B0E15; color:#fff; }
-  .header { background:#0077B5; padding:20px; text-align:center; }
-  .header h1 { color:#D4AF37; font-size:2rem; font-weight:bold; }
-  .container { max-width:800px; margin:40px auto; padding:20px; background:#071124; border-radius:12px; }
-  input, textarea { width:100%; padding:10px; margin-bottom:15px; border-radius:6px; border:none; background:#00000050; color:#fff; }
-  button { width:100%; padding:12px; margin-bottom:15px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; }
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#0B0E15; color:#fff; overflow-x:hidden; display:flex; }
+  /* Sidebar */
+  aside { width:220px; background:#071124; padding:20px 10px; position:fixed; top:0; left:0; height:100vh; overflow-y:auto; border-right:2px solid #0077B5; }
+  aside h2 { color:#D4AF37; font-size:1.2rem; margin-bottom:12px; cursor:pointer; }
+  aside ul { list-style:none; padding-left:0; margin-bottom:20px; }
+  aside ul li { padding:8px; border-radius:6px; cursor:pointer; transition:0.3s; }
+  aside ul li:hover { background:#0F4BE5; }
+  aside ul li small { display:block; color:#aaa; font-size:0.8rem; margin-top:2px; }
+
+  /* Header */
+  header { position:fixed; top:0; left:220px; right:0; display:flex; justify-content:space-between; align-items:center; padding:15px 5%; background:#0077B5; z-index:1000; }
+  header img { width:140px; height:auto; }
+  header .btn-login, header .btn-signup { margin-left:10px; padding:8px 16px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
+  .btn-login { background:transparent; border:2px solid #D4AF37; color:#D4AF37; }
+  .btn-signup { background:#D4AF37; color:#000; }
+
+  /* Main content */
+  main { margin-left:220px; padding:100px 5% 50px 5%; width:100%; max-width:1200px; }
+  h1 { text-align:center; color:#D4AF37; font-size:2rem; margin-bottom:20px; }
+  .banner { background:#D4AF37; color:#0077B5; padding:15px; margin:20px 0; font-weight:bold; border-radius:8px; text-align:center; }
+  .btn-demo { background:#0F4BE5; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:bold; margin-top:10px; }
+
+  section { margin-bottom:50px; }
+  h2.section-title { color:#D4AF37; font-size:1.5rem; margin-bottom:20px; text-align:center; }
+  .grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+  .card { background:#071124; border:2px solid #0077B5; border-radius:12px; width:100%; max-width:260px; padding:18px; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; }
+  .card:hover { transform:translateY(-5px) scale(1.02); box-shadow:0 6px 12px rgba(212,175,55,0.6); }
+  .card h3 { color:#0F4BE5; margin-bottom:8px; font-size:1.1rem; }
+  .card p { color:#fff; margin:2px 0; font-size:0.9rem; }
+
+  /* Modals */
+  .modal, .overlay { display:none; position:fixed; inset:0; }
+  .overlay { background:rgba(0,0,0,0.7); z-index:200; }
+  .modal { background:#071124; border-radius:12px; padding:25px; width:90%; max-width:500px; top:50%; left:50%; transform:translate(-50%, -50%); z-index:300; }
+  .modal h3 { color:#D4AF37; margin-bottom:12px; }
+  .modal p { margin-bottom:8px; }
+  .modal input, .modal textarea { width:100%; padding:10px; margin-bottom:10px; border-radius:6px; border:none; background:#00000050; color:#fff; }
+  .modal button { width:100%; padding:12px; margin-top:10px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; }
+  .btn-apply { background:#0F4BE5; color:#fff; }
+  .btn-close { background:transparent; border:2px solid #fff; color:#fff; }
   .btn-paypal { background:#FFC439; color:#000; }
   .btn-paystack { background:#00A551; color:#fff; }
   .btn-bank { background:#0F4BE5; color:#fff; }
+
+  footer { background:#0077B5; color:#D4AF37; text-align:center; padding:20px; font-weight:bold; margin-top:20px; }
+  footer a { color:#D4AF37; text-decoration:underline; }
+
+  #flakes { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+  .flake { position:absolute; color:#D4AF37; font-size:12px; user-select:none; opacity:0.8; }
+
+  @media(max-width:768px){
+    aside { width:180px; }
+    header { left:180px; padding:10px 3%; }
+    .grid { gap:15px; }
+    .card { width:100%; max-width:100%; }
+    h2.section-title { font-size:1.3rem; }
+  }
+  @media(max-width:480px){
+    main { padding:80px 3% 50px 3%; }
+    header img { width:120px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>GigFlux – Work. Earn. Grow.</h1>
+<aside>
+  <h2 onclick="toggleSection('admin')">Admin</h2>
+  <ul id="admin">
+    <li onclick="alert('View Dashboard')">Dashboard <small>Users, Jobs, Payments</small></li>
+    <li onclick="alert('Payments & Escrow')">Payments & Escrow <small>M-Pesa, Visa, PayPal</small></li>
+    <li onclick="alert('Flag Scammers')">Flag Scammers <small>Instant blocking</small></li>
+  </ul>
+
+  <h2 onclick="toggleSection('employer')">Employer / Client</h2>
+  <ul id="employer">
+    <li onclick="openJobModal('new')">Post Job & Pay</li>
+    <li onclick="alert('View Applications')">My Jobs</li>
+    <li onclick="alert('CRM')">CRM & Follow-ups</li>
+  </ul>
+
+  <h2 onclick="toggleSection('recruiter')">Recruiter</h2>
+  <ul id="recruiter">
+    <li onclick="alert('Search Candidates')">Search Candidates</li>
+    <li onclick="alert('Manage Candidates')">Candidate Management</li>
+    <li onclick="alert('AI Vetting')">AI Profile Vetting</li>
+  </ul>
+
+  <h2 onclick="toggleSection('freelancer')">Freelancer / Tasker</h2>
+  <ul id="freelancer">
+    <li onclick="alert('View Tasks')">Tasks / Micro Gigs</li>
+    <li onclick="alert('Profile & Reviews')">Profile & Reviews</li>
+    <li onclick="alert('Start Task')">Start Task</li>
+  </ul>
+</aside>
+
+<header>
+  <img src="495fc095-ef40-4e2e-9764-4dc12746feec.png" alt="GigFlux Logo" onerror="this.style.display='none';">
+  <div>
+    <button class="btn-login" onclick="openModal('login')">Login</button>
+    <button class="btn-signup" onclick="openModal('signup')">Signup</button>
+  </div>
+</header>
+
+<main>
+  <h1>GigFlux Marketplace</h1>
+  <div class="banner">Payments, Escrow, AI vetting, and CRM live! Post & pay jobs now.</div>
+
+  <!-- Jobs Section -->
+  <section>
+    <h2 class="section-title">Jobs</h2>
+    <div class="grid" id="jobsGrid"></div>
+  </section>
+
+  <!-- Tasks Section -->
+  <section>
+    <h2 class="section-title">Tasks / Micro Gigs</h2>
+    <div class="grid" id="tasksGrid"></div>
+  </section>
+
+  <!-- Admin Dashboard Section -->
+  <section>
+    <h2 class="section-title">Admin Dashboard Preview</h2>
+    <div class="grid">
+      <div class="card" onclick="alert('Admin: View Users')"><h3>Total Users</h3><p>1,200</p></div>
+      <div class="card" onclick="alert('Admin: View Tasks')"><h3>Total Tasks</h3><p>5,400</p></div>
+      <div class="card" onclick="alert('Admin: Manage Payments')"><h3>Payments Pending</h3><p>120</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 GigFlux Marketplace — <a href="#">See More Jobs / Tasks</a>
+</footer>
+
+<div id="flakes"></div>
+
+<!-- Modals -->
+<div class="overlay" id="overlay" onclick="closeModal()"></div>
+
+<div class="modal" id="jobModal">
+  <h3 id="modalTitle">Post a New Job & Pay</h3>
+  <input type="text" id="jobTitle" placeholder="Job Title" required>
+  <textarea id="jobDesc" placeholder="Job Description" rows="4" required></textarea>
+  <input type="text" id="jobType" placeholder="Job Type (e.g., Microtask, Gig)" required>
+  <input type="number" id="jobAmount" placeholder="Amount (USD)" required>
+  <input type="email" id="jobEmail" placeholder="Your Email" required>
+
+  <button class="btn-paypal" onclick="pay('paypal')">Pay via PayPal</button>
+  <button class="btn-paystack" onclick="pay('paystack')">Pay via Paystack</button>
+  <button class="btn-bank" onclick="pay('bank')">Bank Transfer</button>
+
+  <button class="btn-close" onclick="closeModal()">Close</button>
 </div>
 
-<div class="container">
-  <h2 class="text-center text-xl mb-4">Post a Job</h2>
-  <form id="jobForm">
-    <input type="text" id="title" placeholder="Job Title" required>
-    <textarea id="desc" placeholder="Job Description" rows="4" required></textarea>
-    <input type="text" id="type" placeholder="Job Type (e.g., Microtask, Gig, Full Project)" required>
-    <input type="number" id="amount" placeholder="Amount to Pay (USD)" required>
-    <input type="email" id="clientEmail" placeholder="Your Email" required>
-    
-    <button type="button" class="btn-paypal" onclick="pay('paypal')">Pay via PayPal</button>
-    <button type="button" class="btn-paystack" onclick="pay('paystack')">Pay via Paystack</button>
-    <button type="button" class="btn-bank" onclick="pay('bank')">Bank Transfer</button>
-  </form>
+<div class="modal" id="loginModal">
+  <h3 id="loginTitle"></h3>
+  <input type="email" placeholder="Email">
+  <input type="password" placeholder="Password">
+  <button style="background:#D4AF37; color:#000;">Submit</button>
+  <button class="btn-close" onclick="closeModal()">Close</button>
 </div>
 
 <script>
-async function pay(method){
-  const title = document.getElementById('title').value;
-  const desc = document.getElementById('desc').value;
-  const type = document.getElementById('type').value;
-  const amount = parseFloat(document.getElementById('amount').value);
-  const clientEmail = document.getElementById('clientEmail').value;
+// Toggle Sidebar Sections
+function toggleSection(id){
+  const el=document.getElementById(id);
+  el.style.display = el.style.display==="block"?"none":"block";
+}
 
-  if(!title || !desc || !type || !amount || !clientEmail){
-    alert('Please fill all fields');
+// Jobs demo array
+const jobs = [
+  {id:1,title:"AI Data Annotator",company:"RemoteTech",salary:"$20-$30/hr",desc:"Label images and text for AI models."},
+  {id:2,title:"Web Researcher",company:"GlobalData",salary:"$15-$25/hr",desc:"Gather and verify market data online."},
+  {id:3,title:"Content Writer",company:"BlogWorks",salary:"$10-$20/hr",desc:"Write blog articles and SEO content."},
+  {id:4,title:"Transcriptionist",company:"AudioTasker",salary:"$12-$18/hr",desc:"Transcribe audio files accurately."},
+];
+
+// Populate Jobs Grid
+const jobsGrid=document.getElementById("jobsGrid");
+jobs.forEach(job=>{
+  const card=document.createElement("div");
+  card.className="card";
+  card.innerHTML=`<h3>${job.title}</h3><p>${job.company}</p><p>${job.salary}</p>`;
+  card.onclick=()=>openJobModal(job);
+  jobsGrid.appendChild(card);
+});
+
+// Tasks Grid same
+const tasksGrid=document.getElementById("tasksGrid");
+jobs.forEach(task=>{
+  const card=document.createElement("div");
+  card.className="card";
+  card.innerHTML=`<h3>${task.title}</h3><p>${task.company}</p><p>${task.salary}</p>`;
+  card.onclick=()=>openJobModal(task);
+  tasksGrid.appendChild(card);
+});
+
+// Modals
+function openJobModal(job){
+  document.getElementById("overlay").style.display="block";
+  document.getElementById("jobModal").style.display="block";
+}
+
+function openModal(type){
+  if(type==="login"){
+    document.getElementById("loginTitle").innerText="Login to GigFlux";
+    document.getElementById("overlay").style.display="block";
+    document.getElementById("loginModal").style.display="block";
+  } else if(type==="signup"){
+    alert("Signup Modal can be added here.");
+  }
+}
+
+function closeModal(){
+  document.getElementById("overlay").style.display="none";
+  document.getElementById("jobModal").style.display="none";
+  document.getElementById("loginModal").style.display="none";
+}
+
+// Payment integration (simplified)
+function pay(method){
+  const title = document.getElementById("jobTitle").value;
+  const desc = document.getElementById("jobDesc").value;
+  const type = document.getElementById("jobType").value;
+  const amount = document.getElementById("jobAmount").value;
+  const email = document.getElementById("jobEmail").value;
+
+  if(!title || !desc || !type || !amount || !email){
+    alert("Please fill all fields");
     return;
   }
 
-  // Send job to backend as pending_payment
-  const res = await fetch('https://YOUR_BACKEND_URL/api/jobs', {
+  // POST job to backend
+  fetch('https://your-backend-url.com/api/jobs', {
     method:'POST',
     headers:{ 'Content-Type':'application/json' },
-    body: JSON.stringify({ title, desc, type, amount, clientEmail })
-  });
-  const data = await res.json();
-  if(!data.success) { alert('Error creating job'); return; }
+    body: JSON.stringify({ title, desc, type, amount, clientEmail:email })
+  })
+  .then(res=>res.json())
+  .then(data=>{
+    if(data.success){
+      if(method==='paypal'){
+        window.open('https://www.paypal.com/ncp/payment/ETVJ9U2YBBZXL','_blank');
+      } else if(method==='paystack'){
+        window.open('https://paystack.shop/pay/owaky1piaz','_blank');
+      } else if(method==='bank'){
+        alert('Bank Transfer Info:\nAccount: 2043681098');
+      }
+      closeModal();
+    } else {
+      alert('Error: '+data.message);
+    }
+  })
+  .catch(err=>alert('Error posting job: '+err));
+}
 
-  // Redirect to payment
-  if(method==='paypal'){
-    window.location.href = 'https://www.paypal.com/ncp/payment/ETVJ9U2YBBZXL';
-  } else if(method==='paystack'){
-    window.location.href = 'https://paystack.shop/pay/owaky1piaz';
-  } else if(method==='bank'){
-    alert('Please transfer USD ' + amount + ' to account: 2043681098');
-  }
+// Snowflake effect
+const flakes = document.getElementById('flakes');
+for(let i=0;i<30;i++){
+  const flake=document.createElement('div');
+  flake.className='flake';
+  flake.innerText='✦';
+  flake.style.left=Math.random()*window.innerWidth+'px';
+  flake.style.top=Math.random()*window.innerHeight+'px';
+  flake.style.fontSize=(8+Math.random()*12)+'px';
+  flakes.appendChild(flake);
+  animateFlake(flake);
+}
+function animateFlake(flake){
+  let y=parseFloat(flake.style.top);
+  let speed=0.5+Math.random()*1;
+  setInterval(()=>{y+=speed;if(y>window.innerHeight)y=0;flake.style.top=y+'px';},30);
 }
 </script>
-
 </body>
 </html>
