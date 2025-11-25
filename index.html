@@ -1,1270 +1,1280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GigFlux Marketplace — Professional Job & Task Board</title>
-<meta name="description" content="Find quality jobs, tasks, and micro-gigs instantly. Post jobs and hire top talent with secure payments.">
-
-<!-- Open Graph / Facebook -->
-<meta property="og:title" content="GigFlux Marketplace — Professional Job & Task Board">
-<meta property="og:description" content="Find quality jobs, tasks, and micro-gigs instantly. Post jobs and hire top talent with secure payments.">
-<meta property="og:image" content="https://skillmatch-live.onrender.com/495fc095-ef40-4e2e-9764-4dc12746feec.png">
-<meta property="og:url" content="https://skillmatch-live.onrender.com/">
-<meta property="og:type" content="website">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="GigFlux Marketplace — Professional Job & Task Board">
-<meta name="twitter:description" content="Find quality jobs, tasks, and micro-gigs instantly. Post jobs and hire top talent with secure payments.">
-<meta name="twitter:image" content="https://skillmatch-live.onrender.com/495fc095-ef40-4e2e-9764-4dc12746feec.png">
-
-<style>
-  /* CSS Variables for consistent theming */
-  :root {
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
-    --secondary: #f59e0b;
-    --dark: #0f172a;
-    --dark-light: #1e293b;
-    --light: #f8fafc;
-    --gray: #64748b;
-    --success: #10b981;
-    --danger: #ef4444;
-    --border-radius: 8px;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --transition: all 0.3s ease;
-  }
-
-  /* Base Styles */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background-color: var(--dark);
-    color: var(--light);
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-
-  p {
-    margin-bottom: 1rem;
-  }
-
-  a {
-    color: var(--secondary);
-    text-decoration: none;
-    transition: var(--transition);
-  }
-
-  a:hover {
-    color: #fbbf24;
-  }
-
-  button {
-    cursor: pointer;
-    transition: var(--transition);
-    border: none;
-    font-family: inherit;
-  }
-
-  input, textarea, select {
-    font-family: inherit;
-    border: none;
-    outline: none;
-  }
-
-  /* Layout */
-  .container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-
-  .grid {
-    display: grid;
-    gap: 20px;
-  }
-
-  .flex {
-    display: flex;
-  }
-
-  .flex-between {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  /* Header */
-  header {
-    background-color: var(--dark-light);
-    box-shadow: var(--shadow);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 15px 0;
-  }
-
-  .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo img {
-    height: 40px;
-    width: auto;
-  }
-
-  .logo h1 {
-    font-size: 1.5rem;
-    margin-bottom: 0;
-    color: var(--light);
-  }
-
-  .logo span {
-    color: var(--secondary);
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 25px;
-    align-items: center;
-  }
-
-  .nav-links a {
-    color: var(--light);
-    font-weight: 500;
-    position: relative;
-  }
-
-  .nav-links a:hover {
-    color: var(--secondary);
-  }
-
-  .nav-links a.active {
-    color: var(--secondary);
-  }
-
-  .nav-links a.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: var(--secondary);
-  }
-
-  .auth-buttons {
-    display: flex;
-    gap: 10px;
-  }
-
-  .btn {
-    padding: 10px 20px;
-    border-radius: var(--border-radius);
-    font-weight: 600;
-    font-size: 0.9rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .btn-primary {
-    background-color: var(--primary);
-    color: white;
-  }
-
-  .btn-primary:hover {
-    background-color: var(--primary-dark);
-    color: white;
-  }
-
-  .btn-secondary {
-    background-color: var(--secondary);
-    color: var(--dark);
-  }
-
-  .btn-secondary:hover {
-    background-color: #fbbf24;
-    color: var(--dark);
-  }
-
-  .btn-outline {
-    background-color: transparent;
-    border: 1px solid var(--secondary);
-    color: var(--secondary);
-  }
-
-  .btn-outline:hover {
-    background-color: rgba(245, 158, 11, 0.1);
-  }
-
-  /* Hero Section */
-  .hero {
-    background: linear-gradient(135deg, var(--dark-light) 0%, var(--dark) 100%);
-    padding: 140px 0 80px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" opacity="0.05"><polygon fill="%23f59e0b" points="0,1000 1000,0 1000,1000"/></svg>');
-    background-size: cover;
-  }
-
-  .hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-    color: var(--light);
-  }
-
-  .hero h1 span {
-    color: var(--secondary);
-  }
-
-  .hero p {
-    font-size: 1.2rem;
-    color: var(--gray);
-    margin-bottom: 2rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .hero-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-bottom: 2rem;
-  }
-
-  .stats {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin-top: 40px;
-  }
-
-  .stat-item {
-    text-align: center;
-  }
-
-  .stat-number {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--secondary);
-    display: block;
-  }
-
-  .stat-label {
-    font-size: 0.9rem;
-    color: var(--gray);
-  }
-
-  /* Section Styling */
-  .section {
-    padding: 80px 0;
-  }
-
-  .section-title {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-
-  .section-title h2 {
-    font-size: 2.2rem;
-    color: var(--light);
-    margin-bottom: 1rem;
-  }
-
-  .section-title p {
-    color: var(--gray);
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  /* Job Categories */
-  .categories {
-    background-color: var(--dark-light);
-  }
-
-  .categories-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  }
-
-  .category-card {
-    background-color: var(--dark);
-    border-radius: var(--border-radius);
-    padding: 25px;
-    text-align: center;
-    transition: var(--transition);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .category-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow);
-    border-color: var(--primary);
-  }
-
-  .category-icon {
-    width: 60px;
-    height: 60px;
-    background-color: rgba(37, 99, 235, 0.1);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 15px;
-  }
-
-  .category-icon i {
-    font-size: 1.5rem;
-    color: var(--primary);
-  }
-
-  .category-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-  }
-
-  .category-card p {
-    color: var(--gray);
-    font-size: 0.9rem;
-  }
-
-  /* Job Listings */
-  .job-filters {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-  }
-
-  .filter-select {
-    background-color: var(--dark-light);
-    color: var(--light);
-    padding: 10px 15px;
-    border-radius: var(--border-radius);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    min-width: 150px;
-  }
-
-  .search-box {
-    flex: 1;
-    min-width: 250px;
-    position: relative;
-  }
-
-  .search-box input {
-    width: 100%;
-    padding: 10px 15px 10px 40px;
-    background-color: var(--dark-light);
-    color: var(--light);
-    border-radius: var(--border-radius);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .search-box i {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--gray);
-  }
-
-  .jobs-grid {
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  }
-
-  .job-card {
-    background-color: var(--dark-light);
-    border-radius: var(--border-radius);
-    padding: 25px;
-    transition: var(--transition);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    position: relative;
-  }
-
-  .job-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow);
-    border-color: var(--primary);
-  }
-
-  .job-card.featured {
-    border-left: 4px solid var(--secondary);
-  }
-
-  .job-badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: var(--secondary);
-    color: var(--dark);
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    font-weight: 600;
-  }
-
-  .job-header {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 15px;
-  }
-
-  .job-logo {
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
-    background-color: var(--dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-    flex-shrink: 0;
-  }
-
-  .job-logo i {
-    font-size: 1.2rem;
-    color: var(--primary);
-  }
-
-  .job-info h3 {
-    font-size: 1.1rem;
-    margin-bottom: 5px;
-  }
-
-  .job-company {
-    color: var(--gray);
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-  }
-
-  .job-meta {
-    display: flex;
-    gap: 15px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-  }
-
-  .job-meta span {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.8rem;
-    color: var(--gray);
-  }
-
-  .job-meta i {
-    font-size: 0.9rem;
-  }
-
-  .job-description {
-    color: var(--gray);
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .job-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-  }
-
-  .job-salary {
-    font-weight: 600;
-    color: var(--secondary);
-  }
-
-  .job-actions {
-    display: flex;
-    gap: 10px;
-  }
-
-  .btn-sm {
-    padding: 6px 12px;
-    font-size: 0.8rem;
-  }
-
-  /* How It Works */
-  .how-it-works {
-    background-color: var(--dark-light);
-  }
-
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-  }
-
-  .step {
-    text-align: center;
-    position: relative;
-  }
-
-  .step:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    top: 40px;
-    right: -15px;
-    width: 30px;
-    height: 2px;
-    background-color: var(--primary);
-    opacity: 0.3;
-  }
-
-  .step-number {
-    width: 80px;
-    height: 80px;
-    background-color: rgba(37, 99, 235, 0.1);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary);
-  }
-
-  .step h3 {
-    margin-bottom: 10px;
-  }
-
-  .step p {
-    color: var(--gray);
-  }
-
-  /* Testimonials */
-  .testimonials-grid {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
-
-  .testimonial-card {
-    background-color: var(--dark-light);
-    border-radius: var(--border-radius);
-    padding: 25px;
-    position: relative;
-  }
-
-  .testimonial-card::before {
-    content: '"';
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    font-size: 4rem;
-    color: var(--primary);
-    opacity: 0.2;
-    line-height: 1;
-  }
-
-  .testimonial-content {
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-
-  .author-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: var(--dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .author-avatar i {
-    font-size: 1.2rem;
-    color: var(--primary);
-  }
-
-  .author-info h4 {
-    margin-bottom: 5px;
-    font-size: 1rem;
-  }
-
-  .author-info p {
-    color: var(--gray);
-    font-size: 0.8rem;
-    margin-bottom: 0;
-  }
-
-  /* CTA Section */
-  .cta {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    text-align: center;
-    padding: 80px 0;
-  }
-
-  .cta h2 {
-    color: white;
-    margin-bottom: 1rem;
-  }
-
-  .cta p {
-    color: rgba(255, 255, 255, 0.8);
-    max-width: 600px;
-    margin: 0 auto 2rem;
-  }
-
-  .cta-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-  }
-
-  .btn-white {
-    background-color: white;
-    color: var(--primary);
-  }
-
-  .btn-white:hover {
-    background-color: #f1f5f9;
-  }
-
-  .btn-white-outline {
-    background-color: transparent;
-    border: 1px solid white;
-    color: white;
-  }
-
-  .btn-white-outline:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-
-  /* Footer */
-  footer {
-    background-color: var(--dark-light);
-    padding: 60px 0 30px;
-  }
-
-  .footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
-  }
-
-  .footer-column h3 {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    color: var(--light);
-  }
-
-  .footer-links {
-    list-style: none;
-  }
-
-  .footer-links li {
-    margin-bottom: 10px;
-  }
-
-  .footer-links a {
-    color: var(--gray);
-    font-size: 0.9rem;
-  }
-
-  .footer-links a:hover {
-    color: var(--secondary);
-  }
-
-  .social-links {
-    display: flex;
-    gap: 15px;
-    margin-top: 20px;
-  }
-
-  .social-link {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: var(--dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--light);
-  }
-
-  .social-link:hover {
-    background-color: var(--primary);
-    color: white;
-  }
-
-  .footer-bottom {
-    text-align: center;
-    padding-top: 30px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--gray);
-    font-size: 0.9rem;
-  }
-
-  /* Responsive Design */
-  @media (max-width: 992px) {
-    .hero h1 {
-      font-size: 2.5rem;
-    }
-    
-    .steps {
-      grid-template-columns: 1fr;
-    }
-    
-    .step:not(:last-child)::after {
-      display: none;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .header-content {
-      flex-direction: column;
-      gap: 15px;
-    }
-    
-    .nav-links {
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    
-    .hero h1 {
-      font-size: 2rem;
-    }
-    
-    .hero-buttons {
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .stats {
-      flex-direction: column;
-      gap: 20px;
-    }
-    
-    .job-filters {
-      flex-direction: column;
-    }
-    
-    .search-box {
-      min-width: 100%;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .section {
-      padding: 60px 0;
-    }
-    
-    .jobs-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .job-footer {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-    }
-    
-    .job-actions {
-      width: 100%;
-      justify-content: flex-end;
-    }
-  }
-</style>
-
-<!-- Font Awesome for icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GigFlux Pro - Professional Job Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #f59e0b;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dark-light);
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            color: var(--light);
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-links a.active {
+            color: var(--secondary);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #fbbf24;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--dark-light) 0%, var(--dark) 100%);
+            padding: 140px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" opacity="0.05"><polygon fill="%23f59e0b" points="0,1000 1000,0 1000,1000"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .hero h1 span {
+            color: var(--secondary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Job Categories */
+        .categories {
+            background-color: var(--dark-light);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            background-color: var(--dark);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(37, 99, 235, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+
+        .category-icon i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .category-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .category-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Job Listings */
+        .job-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            background-color: var(--dark-light);
+            color: var(--light);
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 150px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            background-color: var(--dark-light);
+            color: var(--light);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .job-card {
+            background-color: var(--dark-light);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .job-card.featured {
+            border-left: 4px solid var(--secondary);
+        }
+
+        .job-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .job-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .job-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            background-color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .job-logo i {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .job-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .job-company {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .job-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .job-meta i {
+            font-size: 0.9rem;
+        }
+
+        .job-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .job-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .job-salary {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .job-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--dark-light);
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 450px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: var(--light);
+        }
+
+        .modal-title {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--light);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--light);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            color: var(--light);
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .form-footer {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .form-footer p {
+            color: var(--gray);
+            margin-top: 15px;
+        }
+
+        .form-footer a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            padding: 0 15px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--dark);
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .social-btn:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-light);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .jobs-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--dark-light);
+                flex-direction: column;
+                padding: 20px;
+                gap: 15px;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .auth-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .job-filters {
+                flex-direction: column;
+            }
+            
+            .search-box {
+                min-width: 100%;
+            }
+            
+            .job-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .job-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section {
+                padding: 60px 0;
+            }
+            
+            .jobs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .job-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .social-login {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<!-- Header -->
-<header>
-  <div class="container">
-    <div class="header-content">
-      <div class="logo">
-        <img src="495fc095-ef40-4e2e-9764-4dc12746feec.png" alt="GigFlux Logo" onerror="this.style.display='none';">
-        <h1>Gig<span>Flux</span></h1>
-      </div>
-      
-      <div class="nav-links">
-        <a href="#" class="active">Home</a>
-        <a href="#">Jobs</a>
-        <a href="#">Tasks</a>
-        <a href="#">How It Works</a>
-        <a href="#">Pricing</a>
-        <a href="#">About</a>
-      </div>
-      
-      <div class="auth-buttons">
-        <button class="btn btn-outline">Login</button>
-        <button class="btn btn-secondary">Sign Up</button>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- Hero Section -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-content">
-      <h1>Find Your Next <span>Career Opportunity</span></h1>
-      <p>Connect with top employers and find quality jobs, freelance gigs, and micro-tasks that match your skills.</p>
-      
-      <div class="hero-buttons">
-        <button class="btn btn-secondary">Find Work</button>
-        <button class="btn btn-outline">Hire Talent</button>
-      </div>
-      
-      <div class="stats">
-        <div class="stat-item">
-          <span class="stat-number">10K+</span>
-          <span class="stat-label">Active Jobs</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">50K+</span>
-          <span class="stat-label">Talented Members</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">95%</span>
-          <span class="stat-label">Success Rate</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Job Categories -->
-<section class="section categories">
-  <div class="container">
-    <div class="section-title">
-      <h2>Browse Job Categories</h2>
-      <p>Find opportunities in your area of expertise</p>
-    </div>
-    
-    <div class="grid categories-grid">
-      <div class="category-card">
-        <div class="category-icon">
-          <i class="fas fa-code"></i>
-        </div>
-        <h3>Technology</h3>
-        <p>Software development, IT support, cybersecurity</p>
-      </div>
-      
-      <div class="category-card">
-        <div class="category-icon">
-          <i class="fas fa-pen-nib"></i>
-        </div>
-        <h3>Creative</h3>
-        <p>Design, writing, photography, video editing</p>
-      </div>
-      
-      <div class="category-card">
-        <div class="category-icon">
-          <i class="fas fa-chart-line"></i>
-        </div>
-        <h3>Marketing</h3>
-        <p>Digital marketing, SEO, social media, content</p>
-      </div>
-      
-      <div class="category-card">
-        <div class="category-icon">
-          <i class="fas fa-calculator"></i>
-        </div>
-        <h3>Finance</h3>
-        <p>Accounting, bookkeeping, financial analysis</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Featured Jobs -->
-<section class="section">
-  <div class="container">
-    <div class="section-title">
-      <h2>Featured Jobs</h2>
-      <p>Hand-picked opportunities from top companies</p>
-    </div>
-    
-    <div class="job-filters">
-      <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search jobs...">
-      </div>
-      
-      <select class="filter-select">
-        <option>All Categories</option>
-        <option>Technology</option>
-        <option>Creative</option>
-        <option>Marketing</option>
-        <option>Finance</option>
-      </select>
-      
-      <select class="filter-select">
-        <option>Any Location</option>
-        <option>Remote</option>
-        <option>On-site</option>
-        <option>Hybrid</option>
-      </select>
-      
-      <select class="filter-select">
-        <option>All Job Types</option>
-        <option>Full-time</option>
-        <option>Part-time</option>
-        <option>Contract</option>
-        <option>Freelance</option>
-      </select>
-    </div>
-    
-    <div class="grid jobs-grid">
-      <!-- Job 1 -->
-      <div class="job-card featured">
-        <span class="job-badge">Featured</span>
-        <div class="job-header">
-          <div class="job-logo">
-            <i class="fab fa-google"></i>
-          </div>
-          <div class="job-info">
-            <h3>Senior UX Designer</h3>
-            <p class="job-company">Google</p>
-            <div class="job-meta">
-              <span><i class="fas fa-map-marker-alt"></i> Remote</span>
-              <span><i class="fas fa-clock"></i> Full-time</span>
-              <span><i class="fas fa-calendar-alt"></i> 2 days ago</span>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="495fc095-ef40-4e2e-9764-4dc12746feec.png" alt="GigFlux Logo" onerror="this.style.display='none';">
+                    <h1>Gig<span>Flux</span></h1>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="nav-links" id="navLinks">
+                    <a href="#" class="active">Home</a>
+                    <a href="#">Jobs</a>
+                    <a href="#">Tasks</a>
+                    <a href="#">How It Works</a>
+                    <a href="#">Pricing</a>
+                    <a href="#">About</a>
+                    
+                    <div class="auth-buttons">
+                        <button class="btn btn-outline" id="loginBtn">Login</button>
+                        <button class="btn btn-secondary" id="signupBtn">Sign Up</button>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        
-        <p class="job-description">We're looking for an experienced UX Designer to join our product team. You'll be responsible for creating user-centered designs by understanding business requirements.</p>
-        
-        <div class="job-footer">
-          <div class="job-salary">$85,000 - $120,000</div>
-          <div class="job-actions">
-            <button class="btn btn-primary btn-sm">Apply Now</button>
-            <button class="btn btn-outline btn-sm">Save</button>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Job 2 -->
-      <div class="job-card">
-        <div class="job-header">
-          <div class="job-logo">
-            <i class="fab fa-microsoft"></i>
-          </div>
-          <div class="job-info">
-            <h3>Frontend Developer</h3>
-            <p class="job-company">Microsoft</p>
-            <div class="job-meta">
-              <span><i class="fas fa-map-marker-alt"></i> Redmond, WA</span>
-              <span><i class="fas fa-clock"></i> Full-time</span>
-              <span><i class="fas fa-calendar-alt"></i> 1 week ago</span>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Find Your Next <span>Career Opportunity</span></h1>
+                <p>Connect with top employers and find quality jobs, freelance gigs, and micro-tasks that match your skills.</p>
+                
+                <div class="hero-buttons">
+                    <button class="btn btn-secondary">Find Work</button>
+                    <button class="btn btn-outline">Hire Talent</button>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Active Jobs</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">Talented Members</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">Success Rate</span>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        
-        <p class="job-description">Join our team to build next-generation web applications using React, TypeScript, and modern frontend technologies.</p>
-        
-        <div class="job-footer">
-          <div class="job-salary">$90,000 - $130,000</div>
-          <div class="job-actions">
-            <button class="btn btn-primary btn-sm">Apply Now</button>
-            <button class="btn btn-outline btn-sm">Save</button>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Job 3 -->
-      <div class="job-card">
-        <div class="job-header">
-          <div class="job-logo">
-            <i class="fas fa-palette"></i>
-          </div>
-          <div class="job-info">
-            <h3>Graphic Designer</h3>
-            <p class="job-company">Creative Studio</p>
-            <div class="job-meta">
-              <span><i class="fas fa-map-marker-alt"></i> Remote</span>
-              <span><i class="fas fa-clock"></i> Part-time</span>
-              <span><i class="fas fa-calendar-alt"></i> 3 days ago</span>
+    </section>
+
+    <!-- Job Categories -->
+    <section class="section categories">
+        <div class="container">
+            <div class="section-title">
+                <h2>Browse Job Categories</h2>
+                <p>Find opportunities in your area of expertise</p>
             </div>
-          </div>
+            
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Technology</h3>
+                    <p>Software development, IT support, cybersecurity</p>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-pen-nib"></i>
+                    </div>
+                    <h3>Creative</h3>
+                    <p>Design, writing, photography, video editing</p>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Marketing</h3>
+                    <p>Digital marketing, SEO, social media, content</p>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Finance</h3>
+                    <p>Accounting, bookkeeping, financial analysis</p>
+                </div>
+            </div>
         </div>
+    </section>
+
+    <!-- Featured Jobs -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Jobs</h2>
+                <p>Hand-picked opportunities from top companies</p>
+            </div>
+            
+            <div class="job-filters">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search jobs...">
+                </div>
+                
+                <select class="filter-select">
+                    <option>All Categories</option>
+                    <option>Technology</option>
+                    <option>Creative</option>
+                    <option>Marketing</option>
+                    <option>Finance</option>
+                </select>
+                
+                <select class="filter-select">
+                    <option>Any Location</option>
+                    <option>Remote</option>
+                    <option>On-site</option>
+                    <option>Hybrid</option>
+                </select>
+                
+                <select class="filter-select">
+                    <option>All Job Types</option>
+                    <option>Full-time</option>
+                    <option>Part-time</option>
+                    <option>Contract</option>
+                    <option>Freelance</option>
+                </select>
+            </div>
+            
+            <div class="jobs-grid">
+                <!-- Job 1 -->
+                <div class="job-card featured">
+                    <span class="job-badge">Featured</span>
+                    <div class="job-header">
+                        <div class="job-logo">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <div class="job-info">
+                            <h3>Senior UX Designer</h3>
+                            <p class="job-company">Google</p>
+                            <div class="job-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                                <span><i class="fas fa-clock"></i> Full-time</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="job-description">We're looking for an experienced UX Designer to join our product team. You'll be responsible for creating user-centered designs by understanding business requirements.</p>
+                    
+                    <div class="job-footer">
+                        <div class="job-salary">$85,000 - $120,000</div>
+                        <div class="job-actions">
+                            <button class="btn btn-primary btn-sm">Apply Now</button>
+                            <button class="btn btn-outline btn-sm">Save</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Job 2 -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-logo">
+                            <i class="fab fa-microsoft"></i>
+                        </div>
+                        <div class="job-info">
+                            <h3>Frontend Developer</h3>
+                            <p class="job-company">Microsoft</p>
+                            <div class="job-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Redmond, WA</span>
+                                <span><i class="fas fa-clock"></i> Full-time</span>
+                                <span><i class="fas fa-calendar-alt"></i> 1 week ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="job-description">Join our team to build next-generation web applications using React, TypeScript, and modern frontend technologies.</p>
+                    
+                    <div class="job-footer">
+                        <div class="job-salary">$90,000 - $130,000</div>
+                        <div class="job-actions">
+                            <button class="btn btn-primary btn-sm">Apply Now</button>
+                            <button class="btn btn-outline btn-sm">Save</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Job 3 -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-logo">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <div class="job-info">
+                            <h3>Graphic Designer</h3>
+                            <p class="job-company">Creative Studio</p>
+                            <div class="job-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                                <span><i class="fas fa-clock"></i> Part-time</span>
+                                <span><i class="fas fa-calendar-alt"></i> 3 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="job-description">We need a talented graphic designer to create engaging visuals for our clients across various digital platforms.</p>
+                    
+                    <div class="job-footer">
+                        <div class="job-salary">$35 - $50/hr</div>
+                        <div class="job-actions">
+                            <button class="btn btn-primary btn-sm">Apply Now</button>
+                            <button class="btn btn-outline btn-sm">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn btn-primary">View All Jobs</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeLoginModal">&times;</button>
+            <h2 class="modal-title">Login to Your Account</h2>
+            
+            <div class="social-login">
+                <button class="social-btn">
+                    <i class="fab fa-google"></i> Google
+                </button>
+                <button class="social-btn">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </button>
+            </div>
+            
+            <div class="divider">
+                <span>or</span>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe" style="display: inline; margin-left: 5px;">Remember me</label>
+                    </div>
+                    <a href="#">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+            
+            <div class="form-footer">
+                <p>Don't have an account? <a href="#" id="switchToSignup">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeSignupModal">&times;</button>
+            <h2 class="modal-title">Create Your Account</h2>
+            
+            <div class="social-login">
+                <button class="social-btn">
+                    <i class="fab fa-google"></i> Google
+                </button>
+                <button class="social-btn">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </button>
+            </div>
+            
+            <div class="divider">
+                <span>or</span>
+            </div>
+            
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" class="form-control" placeholder="Confirm your password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userType">I am a:</label>
+                    <select id="userType" class="form-control" required>
+                        <option value="">Select user type</option>
+                        <option value="job-seeker">Job Seeker / Freelancer</option>
+                        <option value="employer">Employer / Recruiter</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <input type="checkbox" id="agreeTerms" required>
+                    <label for="agreeTerms" style="display: inline; margin-left: 5px;">
+                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+            </form>
+            
+            <div class="form-footer">
+                <p>Already have an account? <a href="#" id="switchToLogin">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>GigFlux</h3>
+                    <p>Connecting talented professionals with businesses worldwide through our innovative job marketplace.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>For Job Seekers</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Browse Jobs</a></li>
+                        <li><a href="#">Browse Tasks</a></li>
+                        <li><a href="#">Create Profile</a></li>
+                        <li><a href="#">Career Resources</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>For Employers</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Post a Job</a></li>
+                        <li><a href="#">Post a Task</a></li>
+                        <li><a href="#">Browse Talent</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 GigFlux Marketplace. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
         
-        <p class="job-description">We need a talented graphic designer to create engaging visuals for our clients across various digital platforms.</p>
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
         
-        <div class="job-footer">
-          <div class="job-salary">$35 - $50/hr</div>
-          <div class="job-actions">
-            <button class="btn btn-primary btn-sm">Apply Now</button>
-            <button class="btn btn-outline btn-sm">Save</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="flex-center" style="margin-top: 40px;">
-      <button class="btn btn-primary">View All Jobs</button>
-    </div>
-  </div>
-</section>
-
-<!-- How It Works -->
-<section class="section how-it-works">
-  <div class="container">
-    <div class="section-title">
-      <h2>How It Works</h2>
-      <p>Simple steps to get started on GigFlux</p>
-    </div>
-    
-    <div class="steps">
-      <div class="step">
-        <div class="step-number">1</div>
-        <h3>Create Your Profile</h3>
-        <p>Sign up and build your professional profile with skills, experience, and portfolio.</p>
-      </div>
-      
-      <div class="step">
-        <div class="step-number">2</div>
-        <h3>Find Opportunities</h3>
-        <p>Browse jobs, gigs, and tasks that match your skills and interests.</p>
-      </div>
-      
-      <div class="step">
-        <div class="step-number">3</div>
-        <h3>Apply & Get Hired</h3>
-        <p>Submit proposals, showcase your expertise, and land your next project.</p>
-      </div>
-      
-      <div class="step">
-        <div class="step-number">4</div>
-        <h3>Work & Get Paid</h3>
-        <p>Complete your work and receive secure payments through our platform.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Testimonials -->
-<section class="section">
-  <div class="container">
-    <div class="section-title">
-      <h2>Success Stories</h2>
-      <p>What our users say about GigFlux</p>
-    </div>
-    
-    <div class="grid testimonials-grid">
-      <div class="testimonial-card">
-        <div class="testimonial-content">
-          <p>GigFlux helped me transition from my 9-5 job to full-time freelancing. The quality of clients and projects is exceptional.</p>
-        </div>
-        <div class="testimonial-author">
-          <div class="author-avatar">
-            <i class="fas fa-user"></i>
-          </div>
-          <div class="author-info">
-            <h4>Sarah Johnson</h4>
-            <p>UI/UX Designer</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="testimonial-card">
-        <div class="testimonial-content">
-          <p>As a small business owner, finding reliable talent was always a challenge. GigFlux changed that completely.</p>
-        </div>
-        <div class="testimonial-author">
-          <div class="author-avatar">
-            <i class="fas fa-user"></i>
-          </div>
-          <div class="author-info">
-            <h4>Michael Chen</h4>
-            <p>Startup Founder</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="testimonial-card">
-        <div class="testimonial-content">
-          <p>I've doubled my income since joining GigFlux. The platform makes it easy to find high-paying projects.</p>
-        </div>
-        <div class="testimonial-author">
-          <div class="author-avatar">
-            <i class="fas fa-user"></i>
-          </div>
-          <div class="author-info">
-            <h4>David Rodriguez</h4>
-            <p>Full Stack Developer</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA Section -->
-<section class="cta">
-  <div class="container">
-    <h2>Ready to Start Your Journey?</h2>
-    <p>Join thousands of professionals and businesses already using GigFlux to find opportunities and talent.</p>
-    <div class="cta-buttons">
-      <button class="btn btn-white">Create Account</button>
-      <button class="btn btn-white-outline">Learn More</button>
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-column">
-        <h3>GigFlux</h3>
-        <p>Connecting talented professionals with businesses worldwide through our innovative job marketplace.</p>
-        <div class="social-links">
-          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-        </div>
-      </div>
-      
-      <div class="footer-column">
-        <h3>For Job Seekers</h3>
-        <ul class="footer-links">
-          <li><a href="#">Browse Jobs</a></li>
-          <li><a href="#">Browse Tasks</a></li>
-          <li><a href="#">Create Profile</a></li>
-          <li><a href="#">Career Resources</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-column">
-        <h3>For Employers</h3>
-        <ul class="footer-links">
-          <li><a href="#">Post a Job</a></li>
-          <li><a href="#">Post a Task</a></li>
-          <li><a href="#">Browse Talent</a></li>
-          <li><a href="#">Pricing</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-column">
-        <h3>Company</h3>
-        <ul class="footer-links">
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">Blog</a></li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="footer-bottom">
-      <p>&copy; 2023 GigFlux Marketplace. All rights reserved.</p>
-    </div>
-  </div>
-</footer>
-
-<script>
-  // Simple JavaScript for interactive elements
-  
-  // Job filtering functionality (simplified)
-  document.querySelector('.search-box input').addEventListener('input', function(e) {
-    const searchTerm = e.target.value.toLowerCase();
-    const jobCards = document.querySelectorAll('.job-card');
-    
-    jobCards.forEach(card => {
-      const jobTitle = card.querySelector('h3').textContent.toLowerCase();
-      const jobCompany = card.querySelector('.job-company').textContent.toLowerCase();
-      const jobDescription = card.querySelector('.job-description').textContent.toLowerCase();
-      
-      if (jobTitle.includes(searchTerm) || jobCompany.includes(searchTerm) || jobDescription.includes(searchTerm)) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-  });
-  
-  // Apply button functionality
-  document.querySelectorAll('.btn-primary').forEach(button => {
-    if (button.textContent === 'Apply Now') {
-      button.addEventListener('click', function() {
-        const jobTitle = this.closest('.job-card').querySelector('h3').textContent;
-        alert(`Application process for "${jobTitle}" would open here.`);
-      });
-    }
-  });
-  
-  // Save job functionality
-  document.querySelectorAll('.btn-outline').forEach(button => {
-    if (button.textContent === 'Save') {
-      button.addEventListener('click', function() {
-        const jobTitle = this.closest('.job-card').querySelector('h3').textContent;
-        alert(`"${jobTitle}" has been saved to your favorites.`);
-      });
-    }
-  });
-</script>
+        // Modal functionality
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const closeSignupModal = document.getElementById('closeSignupModal');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+        
+        // Open login modal
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+        });
+        
+        // Open signup modal
+        signupBtn.addEventListener('click', () => {
+            signupModal.style.display = 'flex';
+        });
+        
+        // Close modals
+        closeLoginModal.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+        
+        closeSignupModal.addEventListener('click', () => {
+            signupModal.style.display = 'none';
+        });
+        
+        // Switch between login and signup
+        switchToSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'none';
+            signupModal.style.display = 'flex';
+        });
+        
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupModal.style.display = 'none';
+            loginModal.style.display = 'flex';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+            if (e.target === signupModal) {
+                signupModal.style.display = 'none';
+            }
+        });
+        
+        // Form submission
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // In a real application, you would handle login here
+            alert('Login functionality would be implemented here');
+            loginModal.style.display = 'none';
+        });
+        
+        document.getElementById('signupForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // In a real application, you would handle signup here
+            alert('Signup functionality would be implemented here');
+            signupModal.style.display = 'none';
+        });
+        
+        // Job search functionality
+        const searchInput = document.querySelector('.search-box input');
+        const jobCards = document.querySelectorAll('.job-card');
+        
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            jobCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const company = card.querySelector('.job-company').textContent.toLowerCase();
+                const description = card.querySelector('.job-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || company.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        
+        // Apply button functionality
+        document.querySelectorAll('.btn-primary').forEach(button => {
+            if (button.textContent === 'Apply Now') {
+                button.addEventListener('click', function() {
+                    const jobTitle = this.closest('.job-card').querySelector('h3').textContent;
+                    alert(`Application process for "${jobTitle}" would open here.`);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
