@@ -3,295 +3,1268 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GigFlux Marketplace — Jobs & Tasks</title>
+<title>GigFlux Marketplace — Professional Job & Task Board</title>
+<meta name="description" content="Find quality jobs, tasks, and micro-gigs instantly. Post jobs and hire top talent with secure payments.">
 
 <!-- Open Graph / Facebook -->
-<meta property="og:title" content="GigFlux Marketplace — Jobs & Tasks">
-<meta property="og:description" content="Find jobs, tasks, and micro-gigs instantly. Pay & post live jobs.">
+<meta property="og:title" content="GigFlux Marketplace — Professional Job & Task Board">
+<meta property="og:description" content="Find quality jobs, tasks, and micro-gigs instantly. Post jobs and hire top talent with secure payments.">
 <meta property="og:image" content="https://skillmatch-live.onrender.com/495fc095-ef40-4e2e-9764-4dc12746feec.png">
 <meta property="og:url" content="https://skillmatch-live.onrender.com/">
 <meta property="og:type" content="website">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="GigFlux Marketplace — Jobs & Tasks">
-<meta name="twitter:description" content="Find jobs, tasks, and micro-gigs instantly. Pay & post live jobs.">
+<meta name="twitter:title" content="GigFlux Marketplace — Professional Job & Task Board">
+<meta name="twitter:description" content="Find quality jobs, tasks, and micro-gigs instantly. Post jobs and hire top talent with secure payments.">
 <meta name="twitter:image" content="https://skillmatch-live.onrender.com/495fc095-ef40-4e2e-9764-4dc12746feec.png">
 
 <style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#0B0E15; color:#fff; overflow-x:hidden; display:flex; }
-  /* Sidebar */
-  aside { width:220px; background:#071124; padding:20px 10px; position:fixed; top:0; left:0; height:100vh; overflow-y:auto; border-right:2px solid #0077B5; }
-  aside h2 { color:#D4AF37; font-size:1.2rem; margin-bottom:12px; cursor:pointer; }
-  aside ul { list-style:none; padding-left:0; margin-bottom:20px; }
-  aside ul li { padding:8px; border-radius:6px; cursor:pointer; transition:0.3s; }
-  aside ul li:hover { background:#0F4BE5; }
-  aside ul li small { display:block; color:#aaa; font-size:0.8rem; margin-top:2px; }
+  /* CSS Variables for consistent theming */
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary: #f59e0b;
+    --dark: #0f172a;
+    --dark-light: #1e293b;
+    --light: #f8fafc;
+    --gray: #64748b;
+    --success: #10b981;
+    --danger: #ef4444;
+    --border-radius: 8px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --transition: all 0.3s ease;
+  }
+
+  /* Base Styles */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--dark);
+    color: var(--light);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  a {
+    color: var(--secondary);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  a:hover {
+    color: #fbbf24;
+  }
+
+  button {
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    font-family: inherit;
+  }
+
+  input, textarea, select {
+    font-family: inherit;
+    border: none;
+    outline: none;
+  }
+
+  /* Layout */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .grid {
+    display: grid;
+    gap: 20px;
+  }
+
+  .flex {
+    display: flex;
+  }
+
+  .flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   /* Header */
-  header { position:fixed; top:0; left:220px; right:0; display:flex; justify-content:space-between; align-items:center; padding:15px 5%; background:#0077B5; z-index:1000; }
-  header img { width:140px; height:auto; }
-  header .btn-login, header .btn-signup { margin-left:10px; padding:8px 16px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
-  .btn-login { background:transparent; border:2px solid #D4AF37; color:#D4AF37; }
-  .btn-signup { background:#D4AF37; color:#000; }
-
-  /* Main content */
-  main { margin-left:220px; padding:100px 5% 50px 5%; width:100%; max-width:1200px; }
-  h1 { text-align:center; color:#D4AF37; font-size:2rem; margin-bottom:20px; }
-  .banner { background:#D4AF37; color:#0077B5; padding:15px; margin:20px 0; font-weight:bold; border-radius:8px; text-align:center; }
-  .btn-demo { background:#0F4BE5; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:bold; margin-top:10px; }
-
-  section { margin-bottom:50px; }
-  h2.section-title { color:#D4AF37; font-size:1.5rem; margin-bottom:20px; text-align:center; }
-  .grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
-  .card { background:#071124; border:2px solid #0077B5; border-radius:12px; width:100%; max-width:260px; padding:18px; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; }
-  .card:hover { transform:translateY(-5px) scale(1.02); box-shadow:0 6px 12px rgba(212,175,55,0.6); }
-  .card h3 { color:#0F4BE5; margin-bottom:8px; font-size:1.1rem; }
-  .card p { color:#fff; margin:2px 0; font-size:0.9rem; }
-
-  /* Modals */
-  .modal, .overlay { display:none; position:fixed; inset:0; }
-  .overlay { background:rgba(0,0,0,0.7); z-index:200; }
-  .modal { background:#071124; border-radius:12px; padding:25px; width:90%; max-width:500px; top:50%; left:50%; transform:translate(-50%, -50%); z-index:300; }
-  .modal h3 { color:#D4AF37; margin-bottom:12px; }
-  .modal p { margin-bottom:8px; }
-  .modal input, .modal textarea { width:100%; padding:10px; margin-bottom:10px; border-radius:6px; border:none; background:#00000050; color:#fff; }
-  .modal button { width:100%; padding:12px; margin-top:10px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; }
-  .btn-apply { background:#0F4BE5; color:#fff; }
-  .btn-close { background:transparent; border:2px solid #fff; color:#fff; }
-  .btn-paypal { background:#FFC439; color:#000; }
-  .btn-paystack { background:#00A551; color:#fff; }
-  .btn-bank { background:#0F4BE5; color:#fff; }
-
-  footer { background:#0077B5; color:#D4AF37; text-align:center; padding:20px; font-weight:bold; margin-top:20px; }
-  footer a { color:#D4AF37; text-decoration:underline; }
-
-  #flakes { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
-  .flake { position:absolute; color:#D4AF37; font-size:12px; user-select:none; opacity:0.8; }
-
-  @media(max-width:768px){
-    aside { width:180px; }
-    header { left:180px; padding:10px 3%; }
-    .grid { gap:15px; }
-    .card { width:100%; max-width:100%; }
-    h2.section-title { font-size:1.3rem; }
+  header {
+    background-color: var(--dark-light);
+    box-shadow: var(--shadow);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 15px 0;
   }
-  @media(max-width:480px){
-    main { padding:80px 3% 50px 3%; }
-    header img { width:120px; }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo img {
+    height: 40px;
+    width: auto;
+  }
+
+  .logo h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+    color: var(--light);
+  }
+
+  .logo span {
+    color: var(--secondary);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: var(--light);
+    font-weight: 500;
+    position: relative;
+  }
+
+  .nav-links a:hover {
+    color: var(--secondary);
+  }
+
+  .nav-links a.active {
+    color: var(--secondary);
+  }
+
+  .nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--secondary);
+  }
+
+  .auth-buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--primary-dark);
+    color: white;
+  }
+
+  .btn-secondary {
+    background-color: var(--secondary);
+    color: var(--dark);
+  }
+
+  .btn-secondary:hover {
+    background-color: #fbbf24;
+    color: var(--dark);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+  }
+
+  .btn-outline:hover {
+    background-color: rgba(245, 158, 11, 0.1);
+  }
+
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(135deg, var(--dark-light) 0%, var(--dark) 100%);
+    padding: 140px 0 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" opacity="0.05"><polygon fill="%23f59e0b" points="0,1000 1000,0 1000,1000"/></svg>');
+    background-size: cover;
+  }
+
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: var(--light);
+  }
+
+  .hero h1 span {
+    color: var(--secondary);
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    color: var(--gray);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    color: var(--gray);
+  }
+
+  /* Section Styling */
+  .section {
+    padding: 80px 0;
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-title h2 {
+    font-size: 2.2rem;
+    color: var(--light);
+    margin-bottom: 1rem;
+  }
+
+  .section-title p {
+    color: var(--gray);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Job Categories */
+  .categories {
+    background-color: var(--dark-light);
+  }
+
+  .categories-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+
+  .category-card {
+    background-color: var(--dark);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    text-align: center;
+    transition: var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+    border-color: var(--primary);
+  }
+
+  .category-icon {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(37, 99, 235, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+  }
+
+  .category-icon i {
+    font-size: 1.5rem;
+    color: var(--primary);
+  }
+
+  .category-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .category-card p {
+    color: var(--gray);
+    font-size: 0.9rem;
+  }
+
+  /* Job Listings */
+  .job-filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .filter-select {
+    background-color: var(--dark-light);
+    color: var(--light);
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 150px;
+  }
+
+  .search-box {
+    flex: 1;
+    min-width: 250px;
+    position: relative;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    background-color: var(--dark-light);
+    color: var(--light);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+  }
+
+  .jobs-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  }
+
+  .job-card {
+    background-color: var(--dark-light);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    transition: var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+  }
+
+  .job-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+    border-color: var(--primary);
+  }
+
+  .job-card.featured {
+    border-left: 4px solid var(--secondary);
+  }
+
+  .job-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: var(--secondary);
+    color: var(--dark);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
+  .job-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+  }
+
+  .job-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    background-color: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+  }
+
+  .job-logo i {
+    font-size: 1.2rem;
+    color: var(--primary);
+  }
+
+  .job-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+
+  .job-company {
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+  }
+
+  .job-meta {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  .job-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+    color: var(--gray);
+  }
+
+  .job-meta i {
+    font-size: 0.9rem;
+  }
+
+  .job-description {
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+  }
+
+  .job-salary {
+    font-weight: 600;
+    color: var(--secondary);
+  }
+
+  .job-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-sm {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  /* How It Works */
+  .how-it-works {
+    background-color: var(--dark-light);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+  }
+
+  .step {
+    text-align: center;
+    position: relative;
+  }
+
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 40px;
+    right: -15px;
+    width: 30px;
+    height: 2px;
+    background-color: var(--primary);
+    opacity: 0.3;
+  }
+
+  .step-number {
+    width: 80px;
+    height: 80px;
+    background-color: rgba(37, 99, 235, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .step h3 {
+    margin-bottom: 10px;
+  }
+
+  .step p {
+    color: var(--gray);
+  }
+
+  /* Testimonials */
+  .testimonials-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .testimonial-card {
+    background-color: var(--dark-light);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    position: relative;
+  }
+
+  .testimonial-card::before {
+    content: '"';
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    font-size: 4rem;
+    color: var(--primary);
+    opacity: 0.2;
+    line-height: 1;
+  }
+
+  .testimonial-content {
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .author-avatar i {
+    font-size: 1.2rem;
+    color: var(--primary);
+  }
+
+  .author-info h4 {
+    margin-bottom: 5px;
+    font-size: 1rem;
+  }
+
+  .author-info p {
+    color: var(--gray);
+    font-size: 0.8rem;
+    margin-bottom: 0;
+  }
+
+  /* CTA Section */
+  .cta {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    text-align: center;
+    padding: 80px 0;
+  }
+
+  .cta h2 {
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .cta p {
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+
+  .btn-white {
+    background-color: white;
+    color: var(--primary);
+  }
+
+  .btn-white:hover {
+    background-color: #f1f5f9;
+  }
+
+  .btn-white-outline {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+  }
+
+  .btn-white-outline:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Footer */
+  footer {
+    background-color: var(--dark-light);
+    padding: 60px 0 30px;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+
+  .footer-column h3 {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: var(--light);
+  }
+
+  .footer-links {
+    list-style: none;
+  }
+
+  .footer-links li {
+    margin-bottom: 10px;
+  }
+
+  .footer-links a {
+    color: var(--gray);
+    font-size: 0.9rem;
+  }
+
+  .footer-links a:hover {
+    color: var(--secondary);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light);
+  }
+
+  .social-link:hover {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--gray);
+    font-size: 0.9rem;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+    
+    .steps {
+      grid-template-columns: 1fr;
+    }
+    
+    .step:not(:last-child)::after {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header-content {
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .nav-links {
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .hero h1 {
+      font-size: 2rem;
+    }
+    
+    .hero-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .stats {
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .job-filters {
+      flex-direction: column;
+    }
+    
+    .search-box {
+      min-width: 100%;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .section {
+      padding: 60px 0;
+    }
+    
+    .jobs-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .job-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    
+    .job-actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
   }
 </style>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<aside>
-  <h2 onclick="toggleSection('admin')">Admin</h2>
-  <ul id="admin">
-    <li onclick="alert('View Dashboard')">Dashboard <small>Users, Jobs, Payments</small></li>
-    <li onclick="alert('Payments & Escrow')">Payments & Escrow <small>M-Pesa, Visa, PayPal</small></li>
-    <li onclick="alert('Flag Scammers')">Flag Scammers <small>Instant blocking</small></li>
-  </ul>
-
-  <h2 onclick="toggleSection('employer')">Employer / Client</h2>
-  <ul id="employer">
-    <li onclick="openJobModal('new')">Post Job & Pay</li>
-    <li onclick="alert('View Applications')">My Jobs</li>
-    <li onclick="alert('CRM')">CRM & Follow-ups</li>
-  </ul>
-
-  <h2 onclick="toggleSection('recruiter')">Recruiter</h2>
-  <ul id="recruiter">
-    <li onclick="alert('Search Candidates')">Search Candidates</li>
-    <li onclick="alert('Manage Candidates')">Candidate Management</li>
-    <li onclick="alert('AI Vetting')">AI Profile Vetting</li>
-  </ul>
-
-  <h2 onclick="toggleSection('freelancer')">Freelancer / Tasker</h2>
-  <ul id="freelancer">
-    <li onclick="alert('View Tasks')">Tasks / Micro Gigs</li>
-    <li onclick="alert('Profile & Reviews')">Profile & Reviews</li>
-    <li onclick="alert('Start Task')">Start Task</li>
-  </ul>
-</aside>
-
+<!-- Header -->
 <header>
-  <img src="495fc095-ef40-4e2e-9764-4dc12746feec.png" alt="GigFlux Logo" onerror="this.style.display='none';">
-  <div>
-    <button class="btn-login" onclick="openModal('login')">Login</button>
-    <button class="btn-signup" onclick="openModal('signup')">Signup</button>
+  <div class="container">
+    <div class="header-content">
+      <div class="logo">
+        <img src="495fc095-ef40-4e2e-9764-4dc12746feec.png" alt="GigFlux Logo" onerror="this.style.display='none';">
+        <h1>Gig<span>Flux</span></h1>
+      </div>
+      
+      <div class="nav-links">
+        <a href="#" class="active">Home</a>
+        <a href="#">Jobs</a>
+        <a href="#">Tasks</a>
+        <a href="#">How It Works</a>
+        <a href="#">Pricing</a>
+        <a href="#">About</a>
+      </div>
+      
+      <div class="auth-buttons">
+        <button class="btn btn-outline">Login</button>
+        <button class="btn btn-secondary">Sign Up</button>
+      </div>
+    </div>
   </div>
 </header>
 
-<main>
-  <h1>GigFlux Marketplace</h1>
-  <div class="banner">Payments, Escrow, AI vetting, and CRM live! Post & pay jobs now.</div>
-
-  <!-- Jobs Section -->
-  <section>
-    <h2 class="section-title">Jobs</h2>
-    <div class="grid" id="jobsGrid"></div>
-  </section>
-
-  <!-- Tasks Section -->
-  <section>
-    <h2 class="section-title">Tasks / Micro Gigs</h2>
-    <div class="grid" id="tasksGrid"></div>
-  </section>
-
-  <!-- Admin Dashboard Section -->
-  <section>
-    <h2 class="section-title">Admin Dashboard Preview</h2>
-    <div class="grid">
-      <div class="card" onclick="alert('Admin: View Users')"><h3>Total Users</h3><p>1,200</p></div>
-      <div class="card" onclick="alert('Admin: View Tasks')"><h3>Total Tasks</h3><p>5,400</p></div>
-      <div class="card" onclick="alert('Admin: Manage Payments')"><h3>Payments Pending</h3><p>120</p></div>
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Find Your Next <span>Career Opportunity</span></h1>
+      <p>Connect with top employers and find quality jobs, freelance gigs, and micro-tasks that match your skills.</p>
+      
+      <div class="hero-buttons">
+        <button class="btn btn-secondary">Find Work</button>
+        <button class="btn btn-outline">Hire Talent</button>
+      </div>
+      
+      <div class="stats">
+        <div class="stat-item">
+          <span class="stat-number">10K+</span>
+          <span class="stat-label">Active Jobs</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">50K+</span>
+          <span class="stat-label">Talented Members</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">95%</span>
+          <span class="stat-label">Success Rate</span>
+        </div>
+      </div>
     </div>
-  </section>
-</main>
+  </div>
+</section>
 
+<!-- Job Categories -->
+<section class="section categories">
+  <div class="container">
+    <div class="section-title">
+      <h2>Browse Job Categories</h2>
+      <p>Find opportunities in your area of expertise</p>
+    </div>
+    
+    <div class="grid categories-grid">
+      <div class="category-card">
+        <div class="category-icon">
+          <i class="fas fa-code"></i>
+        </div>
+        <h3>Technology</h3>
+        <p>Software development, IT support, cybersecurity</p>
+      </div>
+      
+      <div class="category-card">
+        <div class="category-icon">
+          <i class="fas fa-pen-nib"></i>
+        </div>
+        <h3>Creative</h3>
+        <p>Design, writing, photography, video editing</p>
+      </div>
+      
+      <div class="category-card">
+        <div class="category-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>Marketing</h3>
+        <p>Digital marketing, SEO, social media, content</p>
+      </div>
+      
+      <div class="category-card">
+        <div class="category-icon">
+          <i class="fas fa-calculator"></i>
+        </div>
+        <h3>Finance</h3>
+        <p>Accounting, bookkeeping, financial analysis</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Jobs -->
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Featured Jobs</h2>
+      <p>Hand-picked opportunities from top companies</p>
+    </div>
+    
+    <div class="job-filters">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search jobs...">
+      </div>
+      
+      <select class="filter-select">
+        <option>All Categories</option>
+        <option>Technology</option>
+        <option>Creative</option>
+        <option>Marketing</option>
+        <option>Finance</option>
+      </select>
+      
+      <select class="filter-select">
+        <option>Any Location</option>
+        <option>Remote</option>
+        <option>On-site</option>
+        <option>Hybrid</option>
+      </select>
+      
+      <select class="filter-select">
+        <option>All Job Types</option>
+        <option>Full-time</option>
+        <option>Part-time</option>
+        <option>Contract</option>
+        <option>Freelance</option>
+      </select>
+    </div>
+    
+    <div class="grid jobs-grid">
+      <!-- Job 1 -->
+      <div class="job-card featured">
+        <span class="job-badge">Featured</span>
+        <div class="job-header">
+          <div class="job-logo">
+            <i class="fab fa-google"></i>
+          </div>
+          <div class="job-info">
+            <h3>Senior UX Designer</h3>
+            <p class="job-company">Google</p>
+            <div class="job-meta">
+              <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+              <span><i class="fas fa-clock"></i> Full-time</span>
+              <span><i class="fas fa-calendar-alt"></i> 2 days ago</span>
+            </div>
+          </div>
+        </div>
+        
+        <p class="job-description">We're looking for an experienced UX Designer to join our product team. You'll be responsible for creating user-centered designs by understanding business requirements.</p>
+        
+        <div class="job-footer">
+          <div class="job-salary">$85,000 - $120,000</div>
+          <div class="job-actions">
+            <button class="btn btn-primary btn-sm">Apply Now</button>
+            <button class="btn btn-outline btn-sm">Save</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Job 2 -->
+      <div class="job-card">
+        <div class="job-header">
+          <div class="job-logo">
+            <i class="fab fa-microsoft"></i>
+          </div>
+          <div class="job-info">
+            <h3>Frontend Developer</h3>
+            <p class="job-company">Microsoft</p>
+            <div class="job-meta">
+              <span><i class="fas fa-map-marker-alt"></i> Redmond, WA</span>
+              <span><i class="fas fa-clock"></i> Full-time</span>
+              <span><i class="fas fa-calendar-alt"></i> 1 week ago</span>
+            </div>
+          </div>
+        </div>
+        
+        <p class="job-description">Join our team to build next-generation web applications using React, TypeScript, and modern frontend technologies.</p>
+        
+        <div class="job-footer">
+          <div class="job-salary">$90,000 - $130,000</div>
+          <div class="job-actions">
+            <button class="btn btn-primary btn-sm">Apply Now</button>
+            <button class="btn btn-outline btn-sm">Save</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Job 3 -->
+      <div class="job-card">
+        <div class="job-header">
+          <div class="job-logo">
+            <i class="fas fa-palette"></i>
+          </div>
+          <div class="job-info">
+            <h3>Graphic Designer</h3>
+            <p class="job-company">Creative Studio</p>
+            <div class="job-meta">
+              <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+              <span><i class="fas fa-clock"></i> Part-time</span>
+              <span><i class="fas fa-calendar-alt"></i> 3 days ago</span>
+            </div>
+          </div>
+        </div>
+        
+        <p class="job-description">We need a talented graphic designer to create engaging visuals for our clients across various digital platforms.</p>
+        
+        <div class="job-footer">
+          <div class="job-salary">$35 - $50/hr</div>
+          <div class="job-actions">
+            <button class="btn btn-primary btn-sm">Apply Now</button>
+            <button class="btn btn-outline btn-sm">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="flex-center" style="margin-top: 40px;">
+      <button class="btn btn-primary">View All Jobs</button>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="section how-it-works">
+  <div class="container">
+    <div class="section-title">
+      <h2>How It Works</h2>
+      <p>Simple steps to get started on GigFlux</p>
+    </div>
+    
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Create Your Profile</h3>
+        <p>Sign up and build your professional profile with skills, experience, and portfolio.</p>
+      </div>
+      
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Find Opportunities</h3>
+        <p>Browse jobs, gigs, and tasks that match your skills and interests.</p>
+      </div>
+      
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Apply & Get Hired</h3>
+        <p>Submit proposals, showcase your expertise, and land your next project.</p>
+      </div>
+      
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Work & Get Paid</h3>
+        <p>Complete your work and receive secure payments through our platform.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Success Stories</h2>
+      <p>What our users say about GigFlux</p>
+    </div>
+    
+    <div class="grid testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>GigFlux helped me transition from my 9-5 job to full-time freelancing. The quality of clients and projects is exceptional.</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="author-info">
+            <h4>Sarah Johnson</h4>
+            <p>UI/UX Designer</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>As a small business owner, finding reliable talent was always a challenge. GigFlux changed that completely.</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="author-info">
+            <h4>Michael Chen</h4>
+            <p>Startup Founder</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>I've doubled my income since joining GigFlux. The platform makes it easy to find high-paying projects.</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="author-info">
+            <h4>David Rodriguez</h4>
+            <p>Full Stack Developer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+  <div class="container">
+    <h2>Ready to Start Your Journey?</h2>
+    <p>Join thousands of professionals and businesses already using GigFlux to find opportunities and talent.</p>
+    <div class="cta-buttons">
+      <button class="btn btn-white">Create Account</button>
+      <button class="btn btn-white-outline">Learn More</button>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
 <footer>
-  &copy; 2025 GigFlux Marketplace — <a href="#">See More Jobs / Tasks</a>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>GigFlux</h3>
+        <p>Connecting talented professionals with businesses worldwide through our innovative job marketplace.</p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-column">
+        <h3>For Job Seekers</h3>
+        <ul class="footer-links">
+          <li><a href="#">Browse Jobs</a></li>
+          <li><a href="#">Browse Tasks</a></li>
+          <li><a href="#">Create Profile</a></li>
+          <li><a href="#">Career Resources</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h3>For Employers</h3>
+        <ul class="footer-links">
+          <li><a href="#">Post a Job</a></li>
+          <li><a href="#">Post a Task</a></li>
+          <li><a href="#">Browse Talent</a></li>
+          <li><a href="#">Pricing</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Company</h3>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2023 GigFlux Marketplace. All rights reserved.</p>
+    </div>
+  </div>
 </footer>
 
-<div id="flakes"></div>
-
-<!-- Modals -->
-<div class="overlay" id="overlay" onclick="closeModal()"></div>
-
-<div class="modal" id="jobModal">
-  <h3 id="modalTitle">Post a New Job & Pay</h3>
-  <input type="text" id="jobTitle" placeholder="Job Title" required>
-  <textarea id="jobDesc" placeholder="Job Description" rows="4" required></textarea>
-  <input type="text" id="jobType" placeholder="Job Type (e.g., Microtask, Gig)" required>
-  <input type="number" id="jobAmount" placeholder="Amount (USD)" required>
-  <input type="email" id="jobEmail" placeholder="Your Email" required>
-
-  <button class="btn-paypal" onclick="pay('paypal')">Pay via PayPal</button>
-  <button class="btn-paystack" onclick="pay('paystack')">Pay via Paystack</button>
-  <button class="btn-bank" onclick="pay('bank')">Bank Transfer</button>
-
-  <button class="btn-close" onclick="closeModal()">Close</button>
-</div>
-
-<div class="modal" id="loginModal">
-  <h3 id="loginTitle"></h3>
-  <input type="email" placeholder="Email">
-  <input type="password" placeholder="Password">
-  <button style="background:#D4AF37; color:#000;">Submit</button>
-  <button class="btn-close" onclick="closeModal()">Close</button>
-</div>
-
 <script>
-// Toggle Sidebar Sections
-function toggleSection(id){
-  const el=document.getElementById(id);
-  el.style.display = el.style.display==="block"?"none":"block";
-}
-
-// Jobs demo array
-const jobs = [
-  {id:1,title:"AI Data Annotator",company:"RemoteTech",salary:"$20-$30/hr",desc:"Label images and text for AI models."},
-  {id:2,title:"Web Researcher",company:"GlobalData",salary:"$15-$25/hr",desc:"Gather and verify market data online."},
-  {id:3,title:"Content Writer",company:"BlogWorks",salary:"$10-$20/hr",desc:"Write blog articles and SEO content."},
-  {id:4,title:"Transcriptionist",company:"AudioTasker",salary:"$12-$18/hr",desc:"Transcribe audio files accurately."},
-];
-
-// Populate Jobs Grid
-const jobsGrid=document.getElementById("jobsGrid");
-jobs.forEach(job=>{
-  const card=document.createElement("div");
-  card.className="card";
-  card.innerHTML=`<h3>${job.title}</h3><p>${job.company}</p><p>${job.salary}</p>`;
-  card.onclick=()=>openJobModal(job);
-  jobsGrid.appendChild(card);
-});
-
-// Tasks Grid same
-const tasksGrid=document.getElementById("tasksGrid");
-jobs.forEach(task=>{
-  const card=document.createElement("div");
-  card.className="card";
-  card.innerHTML=`<h3>${task.title}</h3><p>${task.company}</p><p>${task.salary}</p>`;
-  card.onclick=()=>openJobModal(task);
-  tasksGrid.appendChild(card);
-});
-
-// Modals
-function openJobModal(job){
-  document.getElementById("overlay").style.display="block";
-  document.getElementById("jobModal").style.display="block";
-}
-
-function openModal(type){
-  if(type==="login"){
-    document.getElementById("loginTitle").innerText="Login to GigFlux";
-    document.getElementById("overlay").style.display="block";
-    document.getElementById("loginModal").style.display="block";
-  } else if(type==="signup"){
-    alert("Signup Modal can be added here.");
-  }
-}
-
-function closeModal(){
-  document.getElementById("overlay").style.display="none";
-  document.getElementById("jobModal").style.display="none";
-  document.getElementById("loginModal").style.display="none";
-}
-
-// Payment integration (simplified)
-function pay(method){
-  const title = document.getElementById("jobTitle").value;
-  const desc = document.getElementById("jobDesc").value;
-  const type = document.getElementById("jobType").value;
-  const amount = document.getElementById("jobAmount").value;
-  const email = document.getElementById("jobEmail").value;
-
-  if(!title || !desc || !type || !amount || !email){
-    alert("Please fill all fields");
-    return;
-  }
-
-  // POST job to backend
-  fetch('https://your-backend-url.com/api/jobs', {
-    method:'POST',
-    headers:{ 'Content-Type':'application/json' },
-    body: JSON.stringify({ title, desc, type, amount, clientEmail:email })
-  })
-  .then(res=>res.json())
-  .then(data=>{
-    if(data.success){
-      if(method==='paypal'){
-        window.open('https://www.paypal.com/ncp/payment/ETVJ9U2YBBZXL','_blank');
-      } else if(method==='paystack'){
-        window.open('https://paystack.shop/pay/owaky1piaz','_blank');
-      } else if(method==='bank'){
-        alert('Bank Transfer Info:\nAccount: 2043681098');
+  // Simple JavaScript for interactive elements
+  
+  // Job filtering functionality (simplified)
+  document.querySelector('.search-box input').addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    const jobCards = document.querySelectorAll('.job-card');
+    
+    jobCards.forEach(card => {
+      const jobTitle = card.querySelector('h3').textContent.toLowerCase();
+      const jobCompany = card.querySelector('.job-company').textContent.toLowerCase();
+      const jobDescription = card.querySelector('.job-description').textContent.toLowerCase();
+      
+      if (jobTitle.includes(searchTerm) || jobCompany.includes(searchTerm) || jobDescription.includes(searchTerm)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
       }
-      closeModal();
-    } else {
-      alert('Error: '+data.message);
+    });
+  });
+  
+  // Apply button functionality
+  document.querySelectorAll('.btn-primary').forEach(button => {
+    if (button.textContent === 'Apply Now') {
+      button.addEventListener('click', function() {
+        const jobTitle = this.closest('.job-card').querySelector('h3').textContent;
+        alert(`Application process for "${jobTitle}" would open here.`);
+      });
     }
-  })
-  .catch(err=>alert('Error posting job: '+err));
-}
-
-// Snowflake effect
-const flakes = document.getElementById('flakes');
-for(let i=0;i<30;i++){
-  const flake=document.createElement('div');
-  flake.className='flake';
-  flake.innerText='✦';
-  flake.style.left=Math.random()*window.innerWidth+'px';
-  flake.style.top=Math.random()*window.innerHeight+'px';
-  flake.style.fontSize=(8+Math.random()*12)+'px';
-  flakes.appendChild(flake);
-  animateFlake(flake);
-}
-function animateFlake(flake){
-  let y=parseFloat(flake.style.top);
-  let speed=0.5+Math.random()*1;
-  setInterval(()=>{y+=speed;if(y>window.innerHeight)y=0;flake.style.top=y+'px';},30);
-}
+  });
+  
+  // Save job functionality
+  document.querySelectorAll('.btn-outline').forEach(button => {
+    if (button.textContent === 'Save') {
+      button.addEventListener('click', function() {
+        const jobTitle = this.closest('.job-card').querySelector('h3').textContent;
+        alert(`"${jobTitle}" has been saved to your favorites.`);
+      });
+    }
+  });
 </script>
 </body>
 </html>
